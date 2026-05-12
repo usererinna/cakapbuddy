@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Mode - CakapBuddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>         
+        /* CONTAINER UNTUK VIDEO & BUTTON */
+        .action-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        margin-top: 30px;
+        }
+
+        .action-area video {
+        width: 380px;
+        border-radius: 100%;
+        }
+    </style>
+</head>
+
+<body data-lang="{{ lang }}">
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/cat-icon.png') }}" class="logo-icon">
+            <span class="logo-text">Cakap<span>Buddy</span></span>
+        </div>
+    </header>
+
+    <main class="page-section">
+        <div class="center-box">
+
+            {% if lang == "english" %}
+                <h2>Select Activity</h2>
+                <p class="subtitle">Please choose a mode to continue.</p>
+            {% else %}
+                <h2>Pilih Mod</h2>
+                <p class="subtitle">Sila pilih mod untuk bermula.</p>
+            {% endif %}
+
+            <div class="btn-group">
+                <a href="{{ url_for('select_level', mode_name='test') }}" class="btn primary">
+                    {{ 'Start Test' if lang == 'english' else 'Mula Ujian' }}
+                </a>
+
+                <a href="{{ url_for('select_level', mode_name='practice') }}" class="btn secondary">
+                    {{ 'Practice Mode' if lang == 'english' else 'Mod Latihan' }}
+                </a>
+            </div>
+
+            <a href="{{ url_for('language') }}" class="btn secondary" 
+            style="margin-top: 25px; display: inline-flex; width: auto; padding: 10px 20px; font-size: 0.9rem;">
+                ← {{ 'Change Language' if lang == 'english' else 'Tukar Bahasa' }}
+            </a>
+
+        </div>
+
+         <div class="action-area">
+      <video autoplay loop muted playsinline>
+        <source src="{{ url_for('static', filename='images/mode.webm') }}"type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </main>
+
+</body>
+</html>

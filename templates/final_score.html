@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Result - CakapBuddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body data-lang="{{ lang }}">
+    <main class="result-section">
+        <div class="result-container" style="text-align: center; max-width: 600px;">
+            
+            <h1>🎉</h1>
+            
+            {% if lang == "english" %}
+                <h2>Test Completed!</h2>
+                <p>Here is your full report card.</p>
+            {% else %}
+                <h2>Ujian Selesai!</h2>
+                <p>Ini adalah kad laporan penuh anda.</p>
+            {% endif %}
+
+            <div class="score-circle" style="
+                width: 120px; height: 120px; 
+                background: {% if score >= 80 %}#00bfa6{% elif score >= 50 %}#ffc107{% else %}#ff6b6b{% endif %}; 
+                color: white; 
+                border-radius: 50%; 
+                display: flex; align-items: center; justify-content: center;
+                font-size: 2.5em; font-weight: bold; margin: 20px auto;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                {{ score }}%
+            </div>
+
+            <div class="report-card-list" style="text-align: left; background: #f8f9fa; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
+                {% for item in report_card %}
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; padding: 10px 0; align-items: center;">
+                    
+                    <div>
+                        <strong style="font-size: 1.05em;">{{ item.word }}</strong><br>
+                        <small style="color: #666;">
+                            {{ 'You said:' if lang == 'english' else 'Anda sebut:' }} "{{ item.user_said }}"
+                        </small>
+
+                        <!-- 🔥 INLINE VALIDATION (SMALL & CLEAN) -->
+                        <div class="admin-validation" style="font-size:0.8em; margin-top:3px;">
+                            
+                            <span style="color:#888;">
+                                {{ 'Validation:' if lang=='english' else 'Validation:' }}
+                            </span>
+
+                            <span class="admin-buttons">
+                                <button onclick="confirmResult(this)" class="confirm-btn">✔</button>
+                                <button onclick="rejectResult(this)" class="reject-btn">❌</button>
+                            </span>
+
+                            <span class="adminStatus" style="margin-left:5px;"></span>
+                        </div>
+                    </div>
+
+                    <div style="font-weight: bold; color: {% if item.score == 100 %}#00bfa6{% elif item.score == 80 %}#fca130{% else %}#ff6b6b{% endif %};">
+                        {{ item.score }}%
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <a href="{{ url_for('mode_select') }}" class="btn secondary" style="width: 100%; justify-content: center;">
+                {{ 'Back to Home' if lang == 'english' else 'Kembali ke Menu' }}
+            </a>
+
+            <button onclick="window.print()" class="btn primary" style="margin-top:10px; width:100%;">
+                {{ 'Print Report' if lang == 'english' else 'Cetak Laporan' }}
+            </button>
+
+        </div>
+    </main>
+
+    <script>
+    function confirmResult(btn) {
+        const container = btn.closest(".admin-validation");
+        const status = container.querySelector(".adminStatus");
+        const buttons = container.querySelector(".admin-buttons");
+
+        status.innerText = document.body.dataset.lang === "english"
+            ? "✔ Confirmed"
+            : "✔ Disahkan";
+
+        status.style.color = "#00bfa6";
+        buttons.style.display = "none";
+    }
+
+    function rejectResult(btn) {
+        const container = btn.closest(".admin-validation");
+        const status = container.querySelector(".adminStatus");
+        const buttons = container.querySelector(".admin-buttons");
+
+        status.innerText = document.body.dataset.lang === "english"
+            ? "❌ Improve"
+            : "❌ Baiki";
+
+        status.style.color = "#ff6b6b";
+        buttons.style.display = "none";
+    }
+    </script>
+
+</body>
+</html>

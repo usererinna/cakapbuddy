@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Test - CakapBuddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+'   <style>         
+        /* CONTAINER UNTUK VIDEO & BUTTON */
+        .action-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        margin-top: 30px;
+        }
+
+        .action-area video {
+        width: 380px;
+        border-radius: 100%;
+        }
+    </style>
+</head>
+
+<body data-lang="{{ lang }}">
+    <header class="navbar">
+       <div class="logo">
+         <img src="{{ url_for('static', filename='images/cat-icon.png') }}" alt="CakapBuddy Logo" class="logo-icon">
+         <span class="logo-text">Cakap<span>Buddy</span></span>
+       </div>
+    </header>
+
+    <main class="test-section">
+
+        <div class="test-container">
+
+            <h2>{{ 'Speech Test' if lang == 'english' else 'Ujian Sebutan' }}</h2>
+
+            <p class="subtitle">
+                {{ 'Say the word below clearly to test your pronunciation!' 
+                   if lang == 'english' 
+                   else 'Sebut perkataan di bawah dengan jelas!' }}
+            </p>
+
+            <div class="word-card">
+                <span id="targetWord" class="test-word">{{ target_word }}</span>
+                <input type="hidden" name="target_word" value="{{ target_word }}">
+            </div>
+
+            <form id="speechForm" action="{{ url_for('result') }}" method="POST">
+                <input type="hidden" id="transcriptInput" name="transcript" value="">
+                <input type="hidden" name="target_word" value="{{ target_word }}">
+
+                <button type="button" id="micBtn" class="btn primary mic-btn">
+                    🎤 {{ 'Start Speaking' if lang == 'english' else 'Mula Bercakap' }}
+                </button>
+
+                <p id="feedback" class="feedback-text">
+                    {{ 'Click Start Speaking and the result will show here!' 
+                       if lang == 'english'
+                       else 'Klik untuk mula bercakap dan keputusan akan dipaparkan di sini!' }}
+                </p>
+
+                <button type="submit" id="resultBtn" class="btn secondary" disabled>
+                    {{ 'Next Question' if lang == 'english' else 'Soalan Seterusnya' }} →
+                </button>
+            </form>
+        </div>
+
+        <div class="action-area">
+      <video autoplay loop muted playsinline>
+        <source src="{{ url_for('static', filename='images/practice.webm') }}"type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

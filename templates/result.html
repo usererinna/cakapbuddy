@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result - CakapBuddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body data-lang="{{ lang }}">
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/cat-icon.png') }}" class="logo-icon">
+            <span class="logo-text">Cakap<span>Buddy</span></span>
+        </div>
+    </header>
+
+    <main class="result-section">
+        <div class="result-container">
+
+            <h2>{{ 'Test Results' if lang=='english' else 'Keputusan Ujian' }}</h2>
+
+            <p class="subtitle">
+                {{ 'Here is your score for:' if lang=='english' else 'Keputusan untuk perkataan:' }}
+                <strong>{{ target_word }}</strong>
+            </p>
+
+            <div class="word-card">
+                <p>
+                    {{ 'You said:' if lang=='english' else 'Anda menyebut:' }}
+                    <strong>"{{ user_said }}"</strong>
+                </p>
+            </div>
+
+            <p class="result-status">
+                {{ 'Your Score:' if lang=='english' else 'Markah:' }}
+                <strong style="font-size:2em; color:
+                    {% if score == 100 %}#00bfa6
+                    {% elif score >= 50 %}#ffc107
+                    {% else %}#dc3545{% endif %}
+                ">
+                    {{ score }}%
+                </strong>
+            </p>
+
+            <p class="feedback-text">{{ feedback }}</p>
+
+            {% if is_finished %}
+                <a href="{{ url_for('final_report') }}" class="btn primary">
+                    {{ 'View Final Score' if lang == 'english' else 'Lihat Markah Akhir' }} →
+                </a>
+            {% else %}
+                <a href="{{ url_for('test') }}" class="btn primary">
+                    {{ 'Next Word' if lang == 'english' else 'Perkataan Seterusnya' }} →
+                </a>
+            {% endif %}
+
+            <a href="{{ url_for('mode_select') }}" class="btn secondary" style="margin-top: 10px;">
+                {{ 'Quit Test' if lang == 'english' else 'Keluar Ujian' }}
+            </a>
+            </div>
+
+        <div class="side-illustration">
+            <img src="{{ url_for('static', filename='images/mascot.png') }}" class="mascot small">
+        </div>
+    </main>
+</body>
+</html>

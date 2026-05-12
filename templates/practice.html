@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Mode - CakapBuddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>         
+        /* CONTAINER UNTUK VIDEO & BUTTON */
+        .action-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        margin-top: 30px;
+        }
+
+        .action-area video {
+        width: 380px;
+        border-radius: 100%;
+        }
+    </style>
+</head>
+
+<body data-lang="{{ lang }}">
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/cat-icon.png') }}" class="logo-icon">
+            <span class="logo-text">Cakap<span>Buddy</span></span>
+        </div>
+    </header>
+
+    <main class="practice-section">
+        <div class="practice-container">
+
+            <h2>{{ 'Practice Mode' if lang == 'english' else 'Mod Latihan' }}</h2>
+
+            <p class="subtitle">
+                {{ 'Repeat each word until you get it right!' 
+                   if lang == 'english' 
+                   else 'Ulang perkataan sehingga anda mahir!' }}
+            </p>
+
+            <div class="word-card centered-card">
+                <h1 id="practiceWord" class="big-practice-word">{{ target_word }}</h1>
+
+                <div class="button-group">
+                    <button id="listenPractice" class="btn secondary">
+                        🔊 {{ 'Listen' if lang == 'english' else 'Dengar' }}
+                    </button>
+
+                    <button id="practiceMic" class="btn primary mic-btn">
+                        🎤 {{ 'Speak' if lang == 'english' else 'Sebut' }}
+                    </button>
+                </div>
+
+                <p id="practiceFeedback" class="feedback-text" style="margin: 20px 0; min-height: 20px;"></p>
+
+                <a href="{{ url_for('practice') }}" class="btn primary" style="width: 100%; justify-content: center;">
+                    {{ 'Next Word' if lang == 'english' else 'Perkataan Lain' }} ➡
+                </a>
+            </div>
+
+            <a href="{{ url_for('mode_select') }}" class="btn secondary" style="margin-top: 15px;">
+                {{ 'Stop Practicing' if lang == 'english' else 'Berhenti Latihan' }}
+            </a>
+            
+        </div>
+
+         <div class="action-area">
+      <video autoplay loop muted playsinline>
+        <source src="{{ url_for('static', filename='images/practice.webm') }}"type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+/* ----------------------------------------------------------
+   GLOBAL RESET + BASE
+---------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #f6fbff, #ffffff);
+  color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+/* ----------------------------------------------------------
+   NAVBAR
+---------------------------------------------------------- */
+.navbar {
+  width: 100%;
+  padding: 15px 60px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 50px;
+}
+
+ .logo-text { font-size: 1.8rem; font-weight: 800; color: #003366; }
+        .logo-text span { color: #00bfa6; }
+
+/* ----------------------------------------------------------
+   PAGE LAYOUT SECTIONS
+---------------------------------------------------------- */
+.hero,
+.test-section,
+.practice-section,
+.result-section,
+.page-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 80px;
+  gap: 6rem;
+}
+
+ h1 {
+            font-size: 3.5rem;
+            color: #003366;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+         p.subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 35px;
+            max-width: 500px;
+        }
+
+/* ----------------------------------------------------------
+   CENTER BOX (Language/Mode)
+---------------------------------------------------------- */
+.center-box,
+.simple-container {
+  background: white;
+  padding: 45px 60px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.center-box h2,
+.simple-container h2 {
+  font-size: 2.4rem;
+  color: #003366;
+  margin-bottom: 15px;
+}
+
+.center-box p,
+.simple-container p {
+  font-size: 1.15rem;
+  color: #555;
+}
+
+/* ----------------------------------------------------------
+   BUTTONS
+---------------------------------------------------------- */
+.btn {
+  font-size: 1.25rem;
+  padding: 18px 45px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.25s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: #00bfa6;
+  color: white;
+
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  font-weight: 600;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 240px;          /* 🔥 LOCK WIDTH */
+  height: 56px;              /* 🔥 LOCK HEIGHT */
+  white-space: nowrap;       /* 🔥 PREVENT TEXT BREAK */
+
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 20px rgba(0, 191, 166, 0.25);
+}
+.btn.primary:hover {
+  background: #00d8bd;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 16px 28px rgba(0, 191, 166, 0.35);
+}
+
+.btn.primary:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+
+.btn.secondary {
+  background: white;
+  color: #00bfa6;
+  border: 2px solid #00bfa6;
+  padding: 18px 45px;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 18px rgba(0, 191, 166, 0.15);
+}
+
+.btn.secondary:hover {
+  background: white;
+  color: #00bfa6;
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 18px 30px rgba(0, 191, 166, 0.25);
+}
+
+.language-buttons,
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.language-buttons .btn {
+  width: 230px;
+}
+
+/* ----------------------------------------------------------
+   TEST / PRACTICE CONTENT
+---------------------------------------------------------- */
+.test-container,
+.practice-container,
+.result-container {
+  max-width: 500px;
+}
+
+.test-container h2 {
+  margin-bottom: 10px;
+  color: #003366;
+  font-size: 2.2rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.note{
+   font-size: 1.2rem;
+  margin-bottom: 30px;
+  margin-top: 40px;
+  color: #555;
+}
+
+/* Word card */
+.word-card {
+  background: #fff;
+  border: 3px solid #00bfa6;
+  border-radius: 20px;
+  padding: 25px 40px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.test-word,
+#practiceWord {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+/* Feedback */
+.feedback-text {
+  font-size: 1.2rem;
+  color: #009268;
+  margin-top: 20px;
+  margin-bottom: 35px;
+  min-height: 2.2rem;
+}
+
+.feedback-error {
+  color: #d9534f !important;
+}
+
+.feedback-success {
+  color: #0abf53 !important;
+}
+
+/* --- New Practice Card Styles --- */
+
+/* Makes the card itself a Flex container that aligns its children vertically */
+.centered-card {
+    display: flex;
+    flex-direction: column; /* Stack word on top of buttons */
+    align-items: center;    /* Center everything horizontally */
+    justify-content: center; /* Center everything vertically in the box */
+    padding: 40px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* A nice, soft shadow */
+    max-width: 600px; /* Prevents it from getting too wide on large screens */
+    margin: 20px auto; /* Centers the card on the page */
+}
+
+/* Style for the big practice word */
+.big-practice-word {
+    font-size: 4em; /* Make the word nice and big */
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 30px; /* Adds space between the word and the buttons */
+}
+
+/* The container for the side-by-side buttons */
+.button-group {
+    display: flex;
+    gap: 20px; /* Adds space between the buttons */
+    width: 100%;
+    justify-content: center; /* Ensures the button group stays centered */
+}
+
+/* Make buttons a bit bigger and nicer for practice mode */
+.button-group .btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 50px; /* Makes them pill-shaped */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text inside button */
+    min-width: 140px; /* Ensures buttons have a balanced width */
+}
+
+/* Optional: Add a little hover bounce */
+.button-group .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+/* Mascot */
+.mascot {
+  width: 430px;
+  max-width: 100%;
+}
+
+
+/* ----------------------------------------------------------
+   RESPONSIVE
+---------------------------------------------------------- */
+@media (max-width: 900px) {
+
+  .test-section,
+  .practice-section,
+  .result-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 2.5rem;
+  }
+
+  .mascot {
+    width: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .btn {
+    width: 100%;
+  }
+
+  .mascot {
+    width: 240px;
+  }
+}
+
+/* --- Level Selection Styles --- */
+.level-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.level-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px 25px;
+    text-align: left;
+    border-radius: 15px;
+    transition: transform 0.2s;
+    color: white !important; /* Force white text */
+}
+
+.level-btn .emoji {
+    font-size: 1.5em;
+    margin-right: 15px;
+}
+
+.level-btn h3 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.level-btn small {
+    opacity: 0.9;
+    font-size: 0.85em;
+    font-weight: normal;
+}
+
+.level-btn:hover {
+    transform: scale(1.02);
+}
+
+/* Colors for levels */
+.level-btn.easy {
+    background-color: #00bfa6; /* Green */
+    box-shadow: 0 4px 0 #00917c;
+}
+
+.level-btn.medium {
+    background-color: #fca130; /* Orange */
+    box-shadow: 0 4px 0 #d68118;
+}
+
+.level-btn.hard {
+    background-color: #ff6b6b; /* Red */
+    box-shadow: 0 4px 0 #d64545;
+}
+
+/* Validation buttons (cute + modern) */
+.confirm-btn,
+.reject-btn {
+    border: none;
+    padding: 4px 8px;
+    font-size: 0.75em;
+    border-radius: 999px; /* pill shape */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 4px;
+}
+
+/* Confirm button */
+.confirm-btn {
+    background-color: #e0f7f4;
+    color: #00bfa6;
+}
+
+/* Reject button */
+.reject-btn {
+    background-color: #ffeaea;
+    color: #ff6b6b;
+}
+
+/* Hover effect */
+.confirm-btn:hover {
+    background-color: #00bfa6;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.reject-btn:hover {
+    background-color: #ff6b6b;
+    color: white;
+    transform: translateY(-1px);
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Level - CakapBuddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body data-lang="{{ lang }}">
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/cat-icon.png') }}" class="logo-icon">
+            <span class="logo-text">Cakap<span>Buddy</span></span>
+        </div>
+    </header>
+
+    <main class="page-section">
+        <div class="center-box">
+            
+            {% if lang == "english" %}
+                <h2>Select Difficulty</h2>
+                <p class="subtitle">Choose a level suitable for your age.</p>
+            {% else %}
+                <h2>Pilih Tahap</h2>
+                <p class="subtitle">Pilih tahap yang sesuai dengan umur anda.</p>
+            {% endif %}
+
+            <div class="level-buttons-container">
+                <a href="{{ url_for('set_level', level_name='easy') }}" class="btn level-btn easy">
+                    <span class="emoji">⭐</span>
+                    <div>
+                        <h3>{{ 'Easy' if lang == 'english' else 'Mudah' }}</h3>
+                        <small>{{ '(4 Years)' if lang == 'english' else '(4 Tahun)' }}</small>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('set_level', level_name='medium') }}" class="btn level-btn medium">
+                    <span class="emoji">⭐⭐</span>
+                    <div>
+                        <h3>{{ 'Medium' if lang == 'english' else 'Sederhana' }}</h3>
+                        <small>{{ '(5 Years)' if lang == 'english' else '(5 Tahun)' }}</small>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('set_level', level_name='hard') }}" class="btn level-btn hard">
+                    <span class="emoji">⭐⭐⭐</span>
+                    <div>
+                        <h3>{{ 'Hard' if lang == 'english' else 'Sukar' }}</h3>
+                        <small>{{ '(6 Years)' if lang == 'english' else '(6 Tahun)' }}</small>
+                    </div>
+                </a>
+            </div>
+
+            <a href="{{ url_for('mode_select') }}" class="btn secondary" style="margin-top: 20px; width: 100%; justify-content: center;">
+            ← {{ 'Back' if lang == 'english' else 'Kembali' }}
+            </a>
+
+        </div>
+    </main>
+</body>
+</html>

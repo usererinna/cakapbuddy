@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CakapBuddy UI Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ----------------------------------------------------------
+   GLOBAL RESET + BASE
+---------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #f6fbff, #ffffff);
+  color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+/* NAVBAR */
+.navbar {
+  width: 100%;
+  padding: 15px 60px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 45px;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+.logo-text span {
+  color: #00bfa6;
+}
+
+/* PAGE SECTION */
+.page-section {
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:60px 20px;
+}
+
+.center-box {
+  background:white;
+  padding:45px 60px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.06);
+  max-width: 500px;
+}
+
+.center-box h2 {
+  font-size:2.4rem;
+  color:#003366;
+  margin-bottom:15px;
+}
+
+.center-box p {
+  font-size:1.15rem;
+  color:#555;
+  margin-bottom: 20px;
+}
+
+/* BUTTONS */
+.btn {
+  font-size:1.25rem;
+  padding:12px 30px;
+  border-radius:50px;
+  font-weight:600;
+  text-decoration:none;
+  transition:0.25s ease;
+  display:inline-block;
+  cursor:pointer;
+    margin-top: -38px;
+}
+
+.btn.primary {
+  background:#00bfa6;
+  color:white;
+  font-size:18px;
+
+  width: 100%; /* Membuat tombol memenuhi lebar container */
+}
+
+.btn.primary:hover {
+  background:#009f8e;
+}
+
+/* CONTAINER UNTUK VIDEO & BUTTON */
+.action-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.action-area video {
+  width: 250px;
+  border-radius: 15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img class="logo-icon" src="{{ url_for('static', filename='images/cat-icon.png') }}" alt="Logo">
+    <span class="logo-text">Cakap<span>Buddy</span></span>
+  </div>
+</header>
+
+<main class="page-section">
+  <div class="center-box">
+    <h2>👋 Welcome to CakapBuddy</h2>
+    <p>Your cute speaking buddy to help you practice pronunciation and learn new words.</p>
+
+    <div class="action-area">
+      <video autoplay loop muted playsinline>
+        <source src="{{ url_for('static', filename='images/buddy.webm') }}"type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      
+      <a href="language.html" class="btn primary">Start Learning</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
