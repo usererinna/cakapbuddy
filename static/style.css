@@ -15,6 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   font-size: 18px;
+  overflow-x: hidden; /* Prevents side-scrolling on mobile */
 }
 
 /* ----------------------------------------------------------
@@ -43,8 +44,8 @@ body {
   width: 50px;
 }
 
- .logo-text { font-size: 1.8rem; font-weight: 800; color: #003366; }
-        .logo-text span { color: #00bfa6; }
+.logo-text { font-size: 1.8rem; font-weight: 800; color: #003366; }
+.logo-text span { color: #00bfa6; }
 
 /* ----------------------------------------------------------
    PAGE LAYOUT SECTIONS
@@ -62,19 +63,19 @@ body {
   gap: 6rem;
 }
 
- h1 {
-            font-size: 3.5rem;
-            color: #003366;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
+h1 {
+  font-size: 3.5rem;
+  color: #003366;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
 
-         p.subtitle {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 35px;
-            max-width: 500px;
-        }
+p.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 35px;
+  max-width: 500px;
+}
 
 /* ----------------------------------------------------------
    CENTER BOX (Language/Mode)
@@ -118,23 +119,23 @@ body {
 .btn.primary {
   background: #00bfa6;
   color: white;
-
   padding: 16px 40px;
   border-radius: 50px;
   font-size: 1.3rem;
   font-weight: 600;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  min-width: 240px;          /* 🔥 LOCK WIDTH */
-  height: 56px;              /* 🔥 LOCK HEIGHT */
-  white-space: nowrap;       /* 🔥 PREVENT TEXT BREAK */
+  
+  /* Modified to be responsive: uses min-width instead of hard width */
+  min-width: 240px; 
+  height: 56px;
+  white-space: nowrap; 
 
   transition: all 0.25s ease;
   box-shadow: 0 10px 20px rgba(0, 191, 166, 0.25);
 }
+
 .btn.primary:hover {
   background: #00d8bd;
   transform: translateY(-4px) scale(1.05);
@@ -144,7 +145,6 @@ body {
 .btn.primary:active {
   transform: translateY(-1px) scale(0.97);
 }
-
 
 .btn.secondary {
   background: white;
@@ -201,13 +201,12 @@ body {
 }
 
 .note{
-   font-size: 1.2rem;
+  font-size: 1.2rem;
   margin-bottom: 30px;
   margin-top: 40px;
   color: #555;
 }
 
-/* Word card */
 .word-card {
   background: #fff;
   border: 3px solid #00bfa6;
@@ -225,7 +224,6 @@ body {
   color: #003366;
 }
 
-/* Feedback */
 .feedback-text {
   font-size: 1.2rem;
   color: #009268;
@@ -234,102 +232,62 @@ body {
   min-height: 2.2rem;
 }
 
-.feedback-error {
-  color: #d9534f !important;
-}
+.feedback-error { color: #d9534f !important; }
+.feedback-success { color: #0abf53 !important; }
 
-.feedback-success {
-  color: #0abf53 !important;
-}
-
-/* --- New Practice Card Styles --- */
-
-/* Makes the card itself a Flex container that aligns its children vertically */
 .centered-card {
     display: flex;
-    flex-direction: column; /* Stack word on top of buttons */
-    align-items: center;    /* Center everything horizontally */
-    justify-content: center; /* Center everything vertically in the box */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 40px;
     text-align: center;
     background: #ffffff;
-    border-radius: 20px; /* Rounded corners */
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08); /* A nice, soft shadow */
-    max-width: 600px; /* Prevents it from getting too wide on large screens */
-    margin: 20px auto; /* Centers the card on the page */
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    max-width: 600px;
+    margin: 20px auto;
 }
 
-/* Style for the big practice word */
 .big-practice-word {
-    font-size: 4em; /* Make the word nice and big */
+    font-size: 4em;
     font-weight: 800;
     color: #2c3e50;
-    margin-bottom: 30px; /* Adds space between the word and the buttons */
+    margin-bottom: 30px;
 }
 
-/* The container for the side-by-side buttons */
 .button-group {
     display: flex;
-    gap: 20px; /* Adds space between the buttons */
+    gap: 20px;
     width: 100%;
-    justify-content: center; /* Ensures the button group stays centered */
+    justify-content: center;
 }
 
-/* Make buttons a bit bigger and nicer for practice mode */
 .button-group .btn {
     padding: 15px 30px;
     font-size: 1.2em;
-    border-radius: 50px; /* Makes them pill-shaped */
+    border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Space between icon and text inside button */
-    min-width: 140px; /* Ensures buttons have a balanced width */
+    gap: 10px;
+    min-width: 140px;
 }
 
-/* Optional: Add a little hover bounce */
 .button-group .btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
 
-/* Mascot */
 .mascot {
   width: 430px;
   max-width: 100%;
 }
 
-
 /* ----------------------------------------------------------
-   RESPONSIVE
+   LEVEL SELECTION STYLES
 ---------------------------------------------------------- */
-@media (max-width: 900px) {
-
-  .test-section,
-  .practice-section,
-  .result-section {
-    flex-direction: column;
-    text-align: center;
-    gap: 2.5rem;
-  }
-
-  .mascot {
-    width: 300px;
-  }
-}
-
-@media (max-width: 600px) {
-  .btn {
-    width: 100%;
-  }
-
-  .mascot {
-    width: 240px;
-  }
-}
-
-/* --- Level Selection Styles --- */
 .level-buttons-container {
     display: flex;
     flex-direction: column;
@@ -347,120 +305,76 @@ body {
     text-align: left;
     border-radius: 15px;
     transition: transform 0.2s;
-    color: white !important; /* Force white text */
+    color: white !important;
 }
 
-.level-btn .emoji {
-    font-size: 1.5em;
-    margin-right: 15px;
-}
+.level-btn .emoji { font-size: 1.5em; margin-right: 15px; }
+.level-btn h3 { margin: 0; font-size: 1.1em; }
+.level-btn small { opacity: 0.9; font-size: 0.85em; font-weight: normal; }
+.level-btn:hover { transform: scale(1.02); }
 
-.level-btn h3 {
-    margin: 0;
-    font-size: 1.1em;
-}
+.level-btn.easy { background-color: #00bfa6; box-shadow: 0 4px 0 #00917c; }
+.level-btn.medium { background-color: #fca130; box-shadow: 0 4px 0 #d68118; }
+.level-btn.hard { background-color: #ff6b6b; box-shadow: 0 4px 0 #d64545; }
 
-.level-btn small {
-    opacity: 0.9;
-    font-size: 0.85em;
-    font-weight: normal;
-}
-
-.level-btn:hover {
-    transform: scale(1.02);
-}
-
-/* Colors for levels */
-.level-btn.easy {
-    background-color: #00bfa6; /* Green */
-    box-shadow: 0 4px 0 #00917c;
-}
-
-.level-btn.medium {
-    background-color: #fca130; /* Orange */
-    box-shadow: 0 4px 0 #d68118;
-}
-
-.level-btn.hard {
-    background-color: #ff6b6b; /* Red */
-    box-shadow: 0 4px 0 #d64545;
-}
-
-/* Validation buttons (cute + modern) */
-.confirm-btn,
-.reject-btn {
+.confirm-btn, .reject-btn {
     border: none;
     padding: 4px 8px;
     font-size: 0.75em;
-    border-radius: 999px; /* pill shape */
+    border-radius: 999px;
     cursor: pointer;
     transition: all 0.2s ease;
     margin-left: 4px;
 }
 
-/* Confirm button */
-.confirm-btn {
-    background-color: #e0f7f4;
-    color: #00bfa6;
-}
+.confirm-btn { background-color: #e0f7f4; color: #00bfa6; }
+.reject-btn { background-color: #ffeaea; color: #ff6b6b; }
+.confirm-btn:hover { background-color: #00bfa6; color: white; transform: translateY(-1px); }
+.reject-btn:hover { background-color: #ff6b6b; color: white; transform: translateY(-1px); }
 
-/* Reject button */
-.reject-btn {
-    background-color: #ffeaea;
-    color: #ff6b6b;
-}
+/* ----------------------------------------------------------
+   RESPONSIVE (The Fixes)
+---------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero, .test-section, .practice-section, .result-section, .page-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 2.5rem;
+    padding: 40px 20px; /* More room for mobile */
+  }
 
-/* Hover effect */
-.confirm-btn:hover {
-    background-color: #00bfa6;
-    color: white;
-    transform: translateY(-1px);
-}
-
-.reject-btn:hover {
-    background-color: #ff6b6b;
-    color: white;
-    transform: translateY(-1px);
+  .mascot { width: 300px; }
 }
 
 @media (max-width: 768px) {
+  h1 { font-size: 2.2rem; }
+  .logo-text { font-size: 1.4rem; }
+  .navbar { padding: 15px 20px; }
 
-  .hero,
-  .test-section,
-  .practice-section,
-  .result-section,
-  .page-section {
-    flex-direction: column;
+  /* Make containers fit phone width */
+  .center-box, .simple-container, .test-container, .practice-container, .result-container {
     padding: 30px 20px;
-    gap: 2rem;
-    text-align: center;
-  }
-
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  .subtitle,
-  .note {
-    font-size: 1rem;
-  }
-
-  .navbar {
-    padding: 15px 20px;
-  }
-
-  .logo-text {
-    font-size: 1.4rem;
-  }
-
-  .btn {
     width: 100%;
-    max-width: 280px;
+    max-width: 100%;
   }
 
-  .mascot,
-  video {
-    width: 100%;
-    max-width: 280px;
+  /* Fix buttons for small screens */
+  .btn, .btn.primary, .btn.secondary, .language-buttons .btn {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0; /* Unlocks the desktop width */
+    white-space: normal; /* Allows text to wrap if the button is small */
   }
+
+  .button-group {
+    flex-direction: column; /* Stack practice buttons */
+    gap: 15px;
+  }
+
+  .big-practice-word { font-size: 2.5em; } /* Shrink big text so it doesn't overflow */
+}
+
+@media (max-width: 600px) {
+  .mascot { width: 240px; }
+  .logo-icon { width: 40px; }
 }
