@@ -42,15 +42,18 @@
                         </small>
 
                         <div class="admin-validation" style="font-size:0.8em; margin-top:3px;">
-                            <span style="color:#888;">
-                                {{ 'Validation:' if lang=='english' else 'Sahkan Sebutan:' }}
-                            </span>
-
-                            <span class="admin-buttons">
-                                <button onclick="updateAndConfirm(this, '{{ item.word }}', 100)" class="confirm-btn">✔</button>
-                                <button onclick="updateAndConfirm(this, '{{ item.word }}', 0)" class="reject-btn">❌</button>
-                            </span>
-
+                            <!-- 🔥 Only show buttons if NOT validated yet -->
+                            {% if not item.validated %}
+                                <span style="color:#888;">Validation:</span>
+                                <span class="admin-buttons">
+                                    <button onclick="updateAndConfirm(this, '{{ item.word }}', 100)" class="confirm-btn">✔</button>
+                                    <button onclick="updateAndConfirm(this, '{{ item.word }}', 0)" class="reject-btn">❌</button>
+                                </span>
+                            {% else %}
+                                <span style="color:#00bfa6; font-weight:bold;">
+                                    {{ '✔ Verified' if lang == 'english' else '✔ Disahkan' }}
+                                </span>
+                            {% endif %}
                             <span class="adminStatus" style="margin-left:5px;"></span>
                         </div>
                     </div>
@@ -65,11 +68,6 @@
             <a href="{{ url_for('mode_select') }}" class="btn secondary" style="width: 100%; justify-content: center;">
                 {{ 'Back to Home' if lang == 'english' else 'Kembali ke Menu' }}
             </a>
-
-            <button onclick="window.print()" class="btn primary" style="margin-top:10px; width:100%;">
-                {{ 'Print Report' if lang == 'english' else 'Cetak Laporan' }}
-            </button>
-
         </div>
     </main>
 
@@ -79,18 +77,9 @@
         const status = container.querySelector(".adminStatus");
         const buttons = container.querySelector(".admin-buttons");
 
-        // 🔥 Fix: Instantly hide buttons on click so the parent knows the click registered
         buttons.style.display = "none";
-        
-        if (newScore === 100) {
-            status.innerText = document.body.dataset.lang === "english" ? "✔ Confirmed" : "✔ Disahkan";
-            status.style.color = "#00bfa6";
-        } else {
-            status.innerText = document.body.dataset.lang === "english" ? "❌ Improve" : "❌ Baiki";
-            status.style.color = "#ff6b6b";
-        }
+        status.innerText = "Saving...";
 
-        // Send validation back to Flask server session
         fetch('/update_score', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -99,18 +88,9 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Refresh to calculate the aggregate circle value
-                setTimeout(() => { window.location.reload(); }, 500);
-            } else {
-                // If backend matching failed, bring the buttons back so they can try again
-                buttons.style.display = "inline";
-                status.innerText = "Error saving";
-                status.style.color = "#ff6b6b";
+                // Reload to hide the buttons permanently for this word
+                window.location.reload();
             }
-        })
-        .catch(err => {
-            buttons.style.display = "inline";
-            status.innerText = "Connection lost";
         });
     }
     </script>
