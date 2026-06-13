@@ -50,21 +50,19 @@
                                 </span>
                             {% else %}
                                 {% if item.score == 100 %}
-                                    <span style="color:#00bfa6; font-weight:bold;">
-                                        {{ '✔ Verified' if lang == 'english' else '✔ Disahkan' }}
-                                    </span>
+                                    <span style="color:#00bfa6; font-weight:bold;">✔ Verified</span>
                                 {% else %}
-                                    <span style="color:#ff6b6b; font-weight:bold;">
-                                        {{ '❌ Checked' if lang == 'english' else '❌ Selesai' }}
-                                    </span>
+                                    <span style="color:#ff6b6b; font-weight:bold;">❌ Checked</span>
                                 {% endif %}
                             {% endif %}
                             <span class="adminStatus" style="margin-left:5px;"></span>
                         </div>
+                    </div>
 
-                    <div style="font-weight: bold; color: {% if item.score == 100 %}#00bfa6{% elif item.score == 80 %}#fca130{% else %}#ff6b6b{% endif %};">
+                    <div style="font-weight: bold; color: {% if item.score == 100 %}#00bfa6{% elif item.score == 80 %}#fca130{% else %}#ff6b6b{% endif %}; text-align: right; min-width: 50px;">
                         {{ item.score }}%
                     </div>
+
                 </div>
                 {% endfor %}
             </div>
