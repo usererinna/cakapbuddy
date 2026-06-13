@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, send_file, jsonify
 import random
 import sqlite3
 from gtts import gTTS
@@ -70,17 +70,36 @@ def calculate_score(transcript, target, lang):
         return 40, FEEDBACK_TEXT[lang]["bad"]
 
 # ----------------------------------------------------
-# 4. PAGE ROUTES
+# 4. AJAX PARENT OVERRIDE ENDPOINT
+# ----------------------------------------------------
+@app.route('/update_score', methods=['POST'])
+def update_score():
+    data = request.get_json() or {}
+    target_word = data.get('word', '')
+    new_score = data.get('score', 100)
+    
+    # Update the score of the most recent item added to quiz_results
+    if "quiz_results" in session and session["quiz_results"]:
+        results = session["quiz_results"]
+        # Look backwards to find the word match
+        for item in reversed(results):
+            if item['word'].lower() == target_word.lower():
+                item['score'] = int(new_score)
+                session.modified = True
+                return jsonify(success=True)
+                
+    return jsonify(success=False, error="Word records not found")
+
+# ----------------------------------------------------
+# 5. PAGE ROUTES
 # ----------------------------------------------------
 
 @app.route('/')
 def welcome():
-    # FIXED: Changed from welcome.html to index.html to match your file list
     return render_template("welcome.html")
 
 @app.route('/language')
 def language():
-    # FIXED: Added missing route to show the language selection page
     return render_template("language.html")
 
 @app.route('/set_language/<selected>')
@@ -104,7 +123,6 @@ def set_level(level_name):
     lang = session.get("lang", "english")
     session["level"] = level_name
 
-    # 🔥 CLEAR OLD SESSION DATA
     session.pop("quiz_words", None)
     session.pop("quiz_results", None)
     session.pop("quiz_current_index", None)
@@ -121,6 +139,7 @@ def set_level(level_name):
     
     target = session.get("target_mode", "practice")
     return redirect(url_for(target))
+
 @app.route('/test')
 def test():
     lang = session.get("lang", "english")
@@ -163,11 +182,17 @@ def result():
         current_results.append(result_data)
         session["quiz_results"] = current_results
         
+        # Advance layout pointer index
         session["quiz_current_index"] += 1
-        return redirect(url_for('test'))
+        
+        # Check if this was the last question of the test block
+        is_finished = session["quiz_current_index"] >= session["quiz_total"]
+        
+        # 🔥 FIXED: Send to result page template instead of redirecting immediately!
+        return render_template("result.html", score=score, feedback=feedback, target_word=target, user_said=transcript, lang=lang, is_finished=is_finished, mode=mode)
 
     else:
-        return render_template("result.html", score=score, feedback=feedback, target_word=target, user_said=transcript, lang=lang, is_finished=False)
+        return render_template("result.html", score=score, feedback=feedback, target_word=target, user_said=transcript, lang=lang, is_finished=False, mode=mode)
 
 @app.route('/final_report')
 def final_report():
