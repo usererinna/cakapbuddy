@@ -55,13 +55,12 @@
                                     </span>
                                 {% else %}
                                     <span style="color:#ff6b6b; font-weight:bold;">
-                                        {{ '❌ Keep Original' if lang == 'english' else '❌ Kekalkan Markah' }}
+                                        {{ '❌ Checked' if lang == 'english' else '❌ Selesai' }}
                                     </span>
                                 {% endif %}
                             {% endif %}
                             <span class="adminStatus" style="margin-left:5px;"></span>
                         </div>
-                    </div>
 
                     <div style="font-weight: bold; color: {% if item.score == 100 %}#00bfa6{% elif item.score == 80 %}#fca130{% else %}#ff6b6b{% endif %};">
                         {{ item.score }}%
