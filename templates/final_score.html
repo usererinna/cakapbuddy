@@ -43,12 +43,12 @@
 
                         <div class="admin-validation" style="font-size:0.8em; margin-top:3px;">
                             <span style="color:#888;">
-                                {{ 'Validation:' if lang=='english' else 'Pengesahan:' }}
+                                {{ 'Validation:' if lang=='english' else 'Sahkan Sebutan:' }}
                             </span>
 
                             <span class="admin-buttons">
                                 <button onclick="updateAndConfirm(this, '{{ item.word }}', 100)" class="confirm-btn">✔</button>
-                                <button onclick="updateAndConfirm(this, '{{ item.word }}', 40)" class="reject-btn">❌</button>
+                                <button onclick="updateAndConfirm(this, '{{ item.word }}', 0)" class="reject-btn">❌</button>
                             </span>
 
                             <span class="adminStatus" style="margin-left:5px;"></span>
@@ -79,6 +79,7 @@
         const status = container.querySelector(".adminStatus");
         const buttons = container.querySelector(".admin-buttons");
 
+        // Send validation payload straight back to Flask server session tracking array
         fetch('/update_score', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -96,7 +97,7 @@
                 }
                 buttons.style.display = "none";
                 
-                // Automatically reloads page instantly to update total circle marks!
+                // Triggers an immediate layout repaint so the circular score increases perfectly!
                 setTimeout(() => { window.location.reload(); }, 400);
             }
         });
