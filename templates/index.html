@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CakapBuddy</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header class="navbar">
       <div class="logo">
@@ -18,10 +20,12 @@
     <main class="hero">
       <div class="hero-text">
         <h1>Let's Learn to Speak!</h1> 
-        <p class="subtitle">Your cute companion for practicing pronunciation in a fun and interactive way.</p>
+        <p class="subtitle">Your cute companion for practicing pronunciation in a fun and interactive way.</p>  
+        
         <div class="buttons">
          <a href="{{ url_for('language') }}" class="btn primary">Start Now 🚀</a>
         </div>
+
        <p class="note">*This website supports early speaking practice and should be used with guidance from teachers or parents.</p>
       </div>
 
@@ -35,7 +39,7 @@
 
     <footer>
       <p style="text-align:center; font-size:0.8em; color:#888;">
-    © CakapBuddy FYP Project
+    © CakapBuddy by Erinna
   </p>
 </footer>
 </body>
