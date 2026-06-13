@@ -3,160 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CakapBuddy UI Preview</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<title>CakapBuddy</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-/* ----------------------------------------------------------
-   GLOBAL RESET + BASE
----------------------------------------------------------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+body{
+    margin:0;
+    padding:0;
 }
 
-body {
-  background: linear-gradient(to bottom right, #f6fbff, #ffffff);
-  color: #1a1a1a;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-size: 18px;
+.hero{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:60px;
+    min-height:80vh;
+    padding:40px;
+    flex-wrap:wrap;
 }
 
-/* NAVBAR */
-.navbar {
-  width: 100%;
-  padding: 15px 60px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.hero-text{
+    max-width:500px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.hero-text h1{
+    font-size:3rem;
+    color:#003366;
+    margin-bottom:15px;
 }
 
-.logo-icon {
-  width: 45px;
+.hero-text .subtitle{
+    font-size:1.15rem;
+    color:#555;
+    margin-bottom:25px;
+    line-height:1.6;
 }
 
-.logo-text {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #003366;
+.buttons{
+    margin-bottom:20px;
 }
 
-.logo-text span {
-  color: #00bfa6;
+.note{
+    font-size:0.85rem;
+    color:#888;
+    margin-top:15px;
 }
 
-/* PAGE SECTION */
-.page-section {
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:60px 20px;
+.hero-image video{
+    width:300px;
+    max-width:100%;
 }
-
-.center-box {
-  background:white;
-  padding:45px 60px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 6px 20px rgba(0,0,0,0.06);
-  max-width: 500px;
-}
-
-.center-box h2 {
-  font-size:2.4rem;
-  color:#003366;
-  margin-bottom:15px;
-}
-
-.center-box p {
-  font-size:1.15rem;
-  color:#555;
-  margin-bottom: 20px;
-}
-
-/* BUTTONS */
-.btn {
-  font-size:1.25rem;
-  padding:12px 30px;
-  border-radius:50px;
-  font-weight:600;
-  text-decoration:none;
-  transition:0.25s ease;
-  display:inline-block;
-  cursor:pointer;
-  margin-top: -38px;
-}
-
-.btn.primary {
-  background:#00bfa6;
-  color:white;
-  font-size:18px;
-  width: 100%;
-}
-
-.btn.primary:hover {
-  background:#009f8e;
-}
-
-/* CONTAINER UNTUK VIDEO & BUTTON */
-.action-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
-  margin-top: 30px;
-}
-
-.action-area video {
-  width: 250px;
-  border-radius: 15px;
-}
-
 </style>
+
 </head>
 
 <body>
 
 <header class="navbar">
-  <div class="logo">
-    <img class="logo-icon" src="{{ url_for('static', filename='images/cat-icon.png') }}" alt="Logo">
-    <span class="logo-text">Cakap<span>Buddy</span></span>
-  </div>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/cat-icon.png') }}"
+             alt="CakapBuddy Logo"
+             class="logo-icon">
+
+        <span class="logo-text">
+            Cakap<span>Buddy</span>
+        </span>
+    </div>
 </header>
 
-<main class="page-section">
-  <div class="center-box">
-    <h2>👋 Welcome to CakapBuddy</h2>
-    <p>Your cute speaking buddy to help you practice pronunciation and learn new words.</p>
+<main class="hero">
 
-    <div class="action-area">
-      <video autoplay loop muted playsinline>
-        <source src="{{ url_for('static', filename='images/buddy.webm') }}" type="video/webm">
-        Your browser does not support the video tag.
-      </video>
+    <div class="hero-text">
+        <h1>Let's Learn to Speak!</h1>
 
-      <a href="{{ url_for('language') }}" class="btn primary">
-    Start Now 🚀
-</a>
+        <p class="subtitle">
+            Your cute companion for practicing pronunciation in a fun and interactive way.
+        </p>
+
+        <div class="buttons">
+            <a href="{{ url_for('language') }}" class="btn primary">
+                Start Now 🚀
+            </a>
+        </div>
+
+        <p class="note">
+            *This website supports early speaking practice and should be used with guidance from teachers or parents.
+        </p>
     </div>
-  </div>
+
+    <div class="hero-image">
+        <video autoplay loop muted playsinline>
+            <source src="{{ url_for('static', filename='images/buddy.webm') }}" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
 </main>
+
+<footer>
+    <p style="text-align:center; font-size:0.8em; color:#888;">
+        © CakapBuddy by Erinna
+    </p>
+</footer>
 
 </body>
 </html>
