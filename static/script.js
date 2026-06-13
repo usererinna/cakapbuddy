@@ -16,7 +16,6 @@ let recognition = null;
 if (window.SpeechRecognition) {
     recognition = new SpeechRecognition();
     recognition.lang = speechCode; 
-    // 🔥 INSTANT CATCHUP: True for both practice, test, and ujian pages!
     recognition.interimResults = true; 
     recognition.maxAlternatives = 1;
 } else {
@@ -68,21 +67,14 @@ function initTestPage() {
     });
 
     recognition.onresult = (event) => {
-        // 🔥 REAL-TIME STREAMING FOR TEST MODE
         let liveTranscript = '';
-        let isFinalResult = false;
 
         for (let i = event.resultIndex; i < event.results.length; ++i) {
             liveTranscript += event.results[i][0].transcript;
-            if (event.results[i].isFinal) {
-                isFinalResult = true;
-            }
         }
 
-        // Clean up punctuation on the fly
         const text = liveTranscript.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g,"").trim();
 
-        // Update the feedback element and input field instantly while speaking!
         feedbackEl.textContent = bodyLang === 'english' 
             ? `You said: "${text}"` 
             : `Anda sebut: "${text}"`;
@@ -91,21 +83,25 @@ function initTestPage() {
             transcriptInput.value = text;
         }
 
-        // Enable the submit/result button the absolute second a final answer is recognized
-        if (isFinalResult && resultBtn) {
+        // 🔥 FIX: Keep the submit/next button enabled while typing/speaking
+        // so it never gets permanently locked out!
+        if (resultBtn) {
             resultBtn.disabled = false;
-            // Stop mic early if final block is settled
-            recognition.stop(); 
         }
     };
 
-    // UI resets cleanly when mic stops
+    // 🔥 FIX: Clean up UI styles safely only when the browser stops recording naturally
     recognition.onend = () => { 
         micBtn.classList.remove("listening");
         micBtn.innerHTML = bodyLang === 'english'
             ? "🎤 Start Speaking"
             : "🎤 Mula Bercakap";
         micBtn.disabled = false; 
+        
+        // Ensure that if text was captured, the next button is absolutely ready to click
+        if (resultBtn && transcriptInput && transcriptInput.value !== "") {
+            resultBtn.disabled = false;
+        }
     };
 }
 
@@ -153,7 +149,6 @@ function initPracticePage() {
             ? `Hearing: "${text}"...` 
             : `Mendengar: "${text}"...`;
 
-        // INSTANT MATCH CHECK
         if (wordsSpoken.includes(target) || text === target) {
             hasMatched = true; 
             feedbackEl.textContent = bodyLang === "english" ? "Great job! ✨" : "Bagus! ✨";
@@ -162,7 +157,6 @@ function initPracticePage() {
             
             recognition.stop();
         } 
-        // Show error only if mic finished processing and still no match
         else if (isFinalResult) {
             feedbackEl.textContent = bodyLang === "english" 
                 ? `You said "${text}". Try again.` 
