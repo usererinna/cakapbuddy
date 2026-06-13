@@ -46,12 +46,18 @@
                                 <span style="color:#888;">Validation:</span>
                                 <span class="admin-buttons">
                                     <button onclick="updateAndConfirm(this, '{{ item.word }}', 100)" class="confirm-btn">✔</button>
-                                    <button onclick="updateAndConfirm(this, '{{ item.word }}', 0)" class="reject-btn">❌</button>
+                                    <button onclick="updateAndConfirm(this, '{{ item.word }}', {{ item.score }})" class="reject-btn">❌</button>
                                 </span>
                             {% else %}
-                                <span style="color:#00bfa6; font-weight:bold;">
-                                    {{ '✔ Verified' if lang == 'english' else '✔ Disahkan' }}
-                                </span>
+                                {% if item.score == 100 %}
+                                    <span style="color:#00bfa6; font-weight:bold;">
+                                        {{ '✔ Verified' if lang == 'english' else '✔ Disahkan' }}
+                                    </span>
+                                {% else %}
+                                    <span style="color:#ff6b6b; font-weight:bold;">
+                                        {{ '❌ Keep Original' if lang == 'english' else '❌ Kekalkan Markah' }}
+                                    </span>
+                                {% endif %}
                             {% endif %}
                             <span class="adminStatus" style="margin-left:5px;"></span>
                         </div>
