@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,17 +22,34 @@
             <p class="subtitle">Choose your preferred language before starting.</p>
 
             <div class="language-buttons">
-                <a href="{{ url_for('set_language', selected='english') }}" class="btn primary">English</a>
-                <a href="{{ url_for('set_language', selected='malay') }}" class="btn secondary">Bahasa Melayu</a>
-            </div>
+                <a href="{{ url_for('set_language', selected='english') }}" class="btn primary">
+                    English
+                </a>
 
-            <!-- Back to Welcome Page Link -->
-            <div style="margin-top: 30px;">
-                <a href="/" style="text-decoration: none; color: #888; font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 5px; transition: color 0.2s;" onmouseover="this.style.color='#003366'" onmouseout="this.style.color='#888'">
-                    ← Back to Welcome Page
+                <a href="{{ url_for('set_language', selected='malay') }}" class="btn secondary">
+                    Bahasa Melayu
                 </a>
             </div>
+
+            <!-- Back Button -->
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="/"
+                   style="
+                   display: inline-block;
+                   padding: 12px 35px;
+                   border: 2px solid #00bfa6;
+                   border-radius: 999px;
+                   color: #00bfa6;
+                   text-decoration: none;
+                   font-weight: 600;
+                   font-size: 1rem;
+                   transition: all 0.2s ease;">
+                   ← Back to Homepage
+                </a>
+            </div>
+
         </div>
     </main>
 </body>
 </html>
+```
