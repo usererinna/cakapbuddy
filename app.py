@@ -75,14 +75,14 @@ def calculate_score(transcript, target, lang):
 @app.route('/update_score', methods=['POST'])
 def update_score():
     data = request.get_json() or {}
-    word = data.get('word', '').lower().strip() # 🔥 Clean and lowercase the word from JS
+    word = data.get('word', '').lower().strip()
     new_score = data.get('score', 100)
     
     if "quiz_results" in session:
         for item in session["quiz_results"]:
-            # 🔥 Clean and lowercase the session word to make an exact match
             if item['word'].lower().strip() == word:
                 item['score'] = int(new_score)
+                item['validated'] = True  # 🔥 Add this flag!
                 session.modified = True 
                 return jsonify(success=True)
                 
