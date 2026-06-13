@@ -74,16 +74,16 @@ def calculate_score(transcript, target, lang):
 # ----------------------------------------------------
 @app.route('/update_score', methods=['POST'])
 def update_score():
-    data = request.get_json()
-    word = data.get('word')
-    new_score = data.get('score')
+    data = request.get_json() or {}
+    word = data.get('word', '').lower().strip() # 🔥 Clean and lowercase the word from JS
+    new_score = data.get('score', 100)
     
     if "quiz_results" in session:
-        # Loop through results and find the word to update its score
         for item in session["quiz_results"]:
-            if item['word'] == word:
+            # 🔥 Clean and lowercase the session word to make an exact match
+            if item['word'].lower().strip() == word:
                 item['score'] = int(new_score)
-                session.modified = True # Tells Flask the session changed
+                session.modified = True 
                 return jsonify(success=True)
                 
     return jsonify(success=False)
