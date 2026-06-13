@@ -79,7 +79,18 @@
         const status = container.querySelector(".adminStatus");
         const buttons = container.querySelector(".admin-buttons");
 
-        // Send validation payload straight back to Flask server session tracking array
+        // 🔥 Fix: Instantly hide buttons on click so the parent knows the click registered
+        buttons.style.display = "none";
+        
+        if (newScore === 100) {
+            status.innerText = document.body.dataset.lang === "english" ? "✔ Confirmed" : "✔ Disahkan";
+            status.style.color = "#00bfa6";
+        } else {
+            status.innerText = document.body.dataset.lang === "english" ? "❌ Improve" : "❌ Baiki";
+            status.style.color = "#ff6b6b";
+        }
+
+        // Send validation back to Flask server session
         fetch('/update_score', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -88,18 +99,18 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                if (newScore === 100) {
-                    status.innerText = document.body.dataset.lang === "english" ? "✔ Confirmed" : "✔ Disahkan";
-                    status.style.color = "#00bfa6";
-                } else {
-                    status.innerText = document.body.dataset.lang === "english" ? "❌ Improve" : "❌ Baiki";
-                    status.style.color = "#ff6b6b";
-                }
-                buttons.style.display = "none";
-                
-                // Triggers an immediate layout repaint so the circular score increases perfectly!
-                setTimeout(() => { window.location.reload(); }, 400);
+                // Refresh to calculate the aggregate circle value
+                setTimeout(() => { window.location.reload(); }, 500);
+            } else {
+                // If backend matching failed, bring the buttons back so they can try again
+                buttons.style.display = "inline";
+                status.innerText = "Error saving";
+                status.style.color = "#ff6b6b";
             }
+        })
+        .catch(err => {
+            buttons.style.display = "inline";
+            status.innerText = "Connection lost";
         });
     }
     </script>
