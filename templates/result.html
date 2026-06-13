@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result - CakapBuddy</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .parent-validation-box {
+            margin: 25px auto;
+            padding: 15px;
+            max-width: 400px;
+            border: 2px dashed #ccd6dd;
+            border-radius: 12px;
+            background-color: #f8f9fa;
+        }
+        .validation-actions {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .val-action-btn {
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+        .val-action-btn:hover {
+            transform: scale(1.2);
+        }
+        .status-msg {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+    </style>
 </head>
 
 <body data-lang="{{ lang }}">
@@ -34,7 +65,7 @@
 
             <p class="result-status">
                 {{ 'Your Score:' if lang=='english' else 'Markah:' }}
-                <strong style="font-size:2em; color:
+                <strong id="display-score-value" style="font-size:2em; color:
                     {% if score == 100 %}#00bfa6
                     {% elif score >= 50 %}#ffc107
                     {% else %}#dc3545{% endif %}
@@ -43,26 +74,42 @@
                 </strong>
             </p>
 
-            <p class="feedback-text">{{ feedback }}</p>
+            <p id="display-feedback-text" class="feedback-text">{{ feedback }}</p>
+
+            {% if mode == "test" %}
+            <div class="parent-validation-box">
+                <p style="margin:0; font-size:0.9rem; color:#495057;">
+                    🧑‍🏫 <strong>{{ 'Parent Check:' if lang == 'english' else 'Semakan Ibu Bapa:' }}</strong> 
+                    {{ 'Did they speak clearly?' if lang == 'english' else 'Adakah sebutan anak betul?' }}
+                </p>
+                <div class="validation-actions">
+                    <span class="val-action-btn check-override" data-word="{{ target_word }}" style="color: #00bfa6;">✓</span>
+                    <span class="val-action-btn cross-override" data-word="{{ target_word }}" style="color: #dc3545;">✗</span>
+                </div>
+                <p id="override-status-output" class="status-msg"></p>
+            </div>
+            {% endif %}
 
             {% if is_finished %}
                 <a href="{{ url_for('final_report') }}" class="btn primary">
                     {{ 'View Final Score' if lang == 'english' else 'Lihat Markah Akhir' }} →
                 </a>
             {% else %}
-                <a href="{{ url_for('test') }}" class="btn primary">
+                <a href="{{ url_for('test' if mode == 'test' else 'practice') }}" class="btn primary">
                     {{ 'Next Word' if lang == 'english' else 'Perkataan Seterusnya' }} →
                 </a>
             {% endif %}
 
             <a href="{{ url_for('mode_select') }}" class="btn secondary" style="margin-top: 10px;">
-                {{ 'Quit Test' if lang == 'english' else 'Keluar Ujian' }}
+                {{ 'Quit' if lang == 'english' else 'Keluar' }}
             </a>
-            </div>
+        </div>
 
         <div class="side-illustration">
             <img src="{{ url_for('static', filename='images/mascot.png') }}" class="mascot small">
         </div>
     </main>
+
+    <script src="{{ url_for('static', filename='result_validation.js') }}"></script>
 </body>
 </html>
