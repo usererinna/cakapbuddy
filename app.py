@@ -74,7 +74,7 @@ def calculate_score(transcript, target, lang):
 # ----------------------------------------------------
 
 @app.route('/')
-def welcome():
+def index():
     # FIXED: Changed from welcome.html to index.html to match your file list
     return render_template("index.html")
 
