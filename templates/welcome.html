@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,15 +101,14 @@ body {
   transition:0.25s ease;
   display:inline-block;
   cursor:pointer;
-    margin-top: -38px;
+  margin-top: -38px;
 }
 
 .btn.primary {
   background:#00bfa6;
   color:white;
   font-size:18px;
-
-  width: 100%; /* Membuat tombol memenuhi lebar container */
+  width: 100%;
 }
 
 .btn.primary:hover {
@@ -148,14 +148,17 @@ body {
 
     <div class="action-area">
       <video autoplay loop muted playsinline>
-        <source src="{{ url_for('static', filename='images/buddy.webm') }}"type="video/mp4">
+        <source src="{{ url_for('static', filename='images/buddy.webm') }}" type="video/webm">
         Your browser does not support the video tag.
       </video>
-      
-      <a href="language.html" class="btn primary">Start Learning</a>
+
+      <a href="{{ url_for('language') }}" class="btn primary">
+        Start Learning
+      </a>
     </div>
   </div>
 </main>
 
 </body>
 </html>
+```
