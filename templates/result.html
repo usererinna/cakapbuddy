@@ -5,30 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result - CakapBuddy</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .parent-validation-box {
-            margin: 20px auto;
-            padding: 15px;
-            max-width: 400px;
-            border: 2px dashed #ccd6dd;
-            border-radius: 12px;
-            background-color: #f8f9fa;
-        }
-        .validation-actions {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .val-action-btn {
-            font-size: 2rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-            user-select: none;
-        }
-        .val-action-btn:hover { transform: scale(1.2); }
-        .status-msg { font-size: 0.85rem; color: #6c757d; margin-top: 8px; min-height: 18px; }
-    </style>
 </head>
 
 <body data-lang="{{ lang }}">
@@ -41,10 +17,11 @@
 
     <main class="result-section">
         <div class="result-container">
-            <h2>{{ 'Test Results' if lang=='english' else 'Keputusan Ujian' }}</h2>
+
+            <h2>{{ 'Practice Results' if lang=='english' else 'Keputusan Latihan' }}</h2>
 
             <p class="subtitle">
-                {{ 'Here is your score for:' if lang=='english' else 'Keputusan untuk perkataan:' }}
+                {{ 'Word practiced:' if lang=='english' else 'Perkataan dilatih:' }}
                 <strong>{{ target_word }}</strong>
             </p>
 
@@ -57,7 +34,7 @@
 
             <p class="result-status">
                 {{ 'Your Score:' if lang=='english' else 'Markah:' }}
-                <strong id="display-score-value" style="font-size:2em; color:
+                <strong style="font-size:2em; color:
                     {% if score == 100 %}#00bfa6
                     {% elif score >= 50 %}#ffc107
                     {% else %}#dc3545{% endif %}
@@ -66,83 +43,20 @@
                 </strong>
             </p>
 
-            <p id="display-feedback-text" class="feedback-text">{{ feedback }}</p>
+            <p class="feedback-text">{{ feedback }}</p>
 
-            <!-- Parent Override Section -->
-            {% if mode == "test" %}
-            <div class="parent-validation-box">
-                <p style="margin:0; font-size:0.9rem; color:#495057;">
-                    🧑‍🏫 <strong>{{ 'Parent Check:' if lang == 'english' else 'Semakan Ibu Bapa:' }}</strong> 
-                    {{ 'Did they speak clearly?' if lang == 'english' else 'Adakah sebutan anak betul?' }}
-                </p>
-                <div class="validation-actions">
-                    <span class="val-action-btn check-override" data-word="{{ target_word }}" style="color: #00bfa6;">✓</span>
-                    <span class="val-action-btn cross-override" data-word="{{ target_word }}" style="color: #dc3545;">✗</span>
-                </div>
-                <p id="override-status-output" class="status-msg"></p>
-            </div>
-            {% endif %}
-
-            {% if is_finished %}
-                <a href="{{ url_for('final_report') }}" class="btn primary">
-                    {{ 'View Final Score' if lang == 'english' else 'Lihat Markah Akhir' }} →
-                </a>
-            {% else %}
-                <a href="{{ url_for('test' if mode == 'test' else 'practice') }}" class="btn primary">
-                    {{ 'Next Word' if lang == 'english' else 'Perkataan Seterusnya' }} →
-                </a>
-            {% endif %}
+            <a href="{{ url_for('practice') }}" class="btn primary">
+                {{ 'Next Word' if lang == 'english' else 'Perkataan Seterusnya' }} →
+            </a>
 
             <a href="{{ url_for('mode_select') }}" class="btn secondary" style="margin-top: 10px;">
                 {{ 'Quit' if lang == 'english' else 'Keluar' }}
             </a>
         </div>
+
+        <div class="side-illustration">
+            <img src="{{ url_for('static', filename='images/mascot.png') }}" class="mascot small">
+        </div>
     </main>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const checkBtn = document.querySelector(".check-override");
-            const crossBtn = document.querySelector(".cross-override");
-            const displayScore = document.getElementById("display-score-value");
-            const feedbackText = document.getElementById("display-feedback-text");
-            const statusMsg = document.getElementById("override-status-output");
-            const currentLang = document.body.getAttribute("data-lang") || "english";
-
-            function processOverride(targetWord, overrideScore, targetColor, message) {
-                statusMsg.textContent = currentLang === "english" ? "Saving..." : "Menyimpan...";
-                
-                fetch('/update_score', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ word: targetWord, score: overrideScore })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        displayScore.textContent = overrideScore + "%";
-                        displayScore.style.color = targetColor;
-                        feedbackText.textContent = message;
-                        statusMsg.textContent = currentLang === "english" ? "✨ Saved!" : "✨ Berjaya!";
-                        statusMsg.style.color = "#00bfa6";
-                    }
-                });
-            }
-
-            if (checkBtn) {
-                checkBtn.addEventListener("click", () => {
-                    const word = checkBtn.getAttribute("data-word");
-                    const msg = currentLang === "english" ? "Perfect! (Validated)" : "Tepat! (Disahkan)";
-                    processOverride(word, 100, "#00bfa6", msg);
-                });
-            }
-            if (crossBtn) {
-                crossBtn.addEventListener("click", () => {
-                    const word = crossBtn.getAttribute("data-word");
-                    const msg = currentLang === "english" ? "Try again. (Validated)" : "Cuba lagi. (Disahkan)";
-                    processOverride(word, 0, "#dc3545", msg);
-                });
-            }
-        });
-    </script>
 </body>
 </html>
