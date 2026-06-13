@@ -41,18 +41,13 @@
                             {{ 'You said:' if lang == 'english' else 'Anda sebut:' }} "{{ item.user_said }}"
                         </small>
 
-                        <!-- 🔥 INLINE VALIDATION (SMALL & CLEAN) -->
                         <div class="admin-validation" style="font-size:0.8em; margin-top:3px;">
-                            
-                            <span style="color:#888;">
-                                {{ 'Validation:' if lang=='english' else 'Validation:' }}
-                            </span>
-
+                            <span style="color:#888;">Validation:</span>
                             <span class="admin-buttons">
-                                <button onclick="confirmResult(this)" class="confirm-btn">✔</button>
-                                <button onclick="rejectResult(this)" class="reject-btn">❌</button>
+                                <!-- Added data-word attribute to identify which word to update -->
+                                <button onclick="updateAndConfirm(this, '{{ item.word }}', 100)" class="confirm-btn">✔</button>
+                                <button onclick="updateAndConfirm(this, '{{ item.word }}', 0)" class="reject-btn">❌</button>
                             </span>
-
                             <span class="adminStatus" style="margin-left:5px;"></span>
                         </div>
                     </div>
@@ -67,41 +62,39 @@
             <a href="{{ url_for('mode_select') }}" class="btn secondary" style="width: 100%; justify-content: center;">
                 {{ 'Back to Home' if lang == 'english' else 'Kembali ke Menu' }}
             </a>
-
-            <button onclick="window.print()" class="btn primary" style="margin-top:10px; width:100%;">
-                {{ 'Print Report' if lang == 'english' else 'Cetak Laporan' }}
-            </button>
-
         </div>
     </main>
 
     <script>
-    function confirmResult(btn) {
+    function updateAndConfirm(btn, wordText, newScore) {
         const container = btn.closest(".admin-validation");
         const status = container.querySelector(".adminStatus");
         const buttons = container.querySelector(".admin-buttons");
 
-        status.innerText = document.body.dataset.lang === "english"
-            ? "✔ Confirmed"
-            : "✔ Disahkan";
-
-        status.style.color = "#00bfa6";
-        buttons.style.display = "none";
-    }
-
-    function rejectResult(btn) {
-        const container = btn.closest(".admin-validation");
-        const status = container.querySelector(".adminStatus");
-        const buttons = container.querySelector(".admin-buttons");
-
-        status.innerText = document.body.dataset.lang === "english"
-            ? "❌ Improve"
-            : "❌ Baiki";
-
-        status.style.color = "#ff6b6b";
-        buttons.style.display = "none";
+        // 1. Tell the backend to change the mark
+        fetch('/update_score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ word: wordText, score: newScore })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // 2. Visual feedback
+                if (newScore === 100) {
+                    status.innerText = document.body.dataset.lang === "english" ? "✔ Confirmed" : "✔ Disahkan";
+                    status.style.color = "#00bfa6";
+                } else {
+                    status.innerText = document.body.dataset.lang === "english" ? "❌ Improve" : "❌ Baiki";
+                    status.style.color = "#ff6b6b";
+                }
+                buttons.style.display = "none";
+                
+                // 3. Reload after a tiny delay so the parent sees the total score increase!
+                setTimeout(() => { window.location.reload(); }, 600);
+            }
+        });
     }
     </script>
-
 </body>
 </html>
